@@ -12,7 +12,7 @@ set(PROJECT_NAME "hit-circle-backend")
 
 # C Compiler settings
 add_compile_options(-Werror -g)
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lsqlite3")
 set(CMAKE_BUILD_TYPE Debug)                             # Type : Debug
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)   # Bin Path : bin
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)      # Lib Path : lib
@@ -29,4 +29,6 @@ add_subdirectory(${MODULE_DIR})
 
 add_executable (${PROJECT_NAME} main.cpp ${SRC_LIST})
 target_link_libraries(${PROJECT_NAME}
+    SQL
+    cmdParser
 )
