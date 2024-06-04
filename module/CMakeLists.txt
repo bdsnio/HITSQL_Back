@@ -1,16 +1,29 @@
+#>>>>>>>>>>>myLog<<<<<<<
 add_library(myLog STATIC
     ${MODULE_DIR}/log/log.cpp
 )
+#>>>>>>>>>>>theSqlite<<<<<<<
 add_library(theSqlite STATIC
     ${MODULE_DIR}/sql/sqlite3.c
 )
+#>>>>>>>>>>>SQL<<<<<<<
 add_library(SQL STATIC
     ${MODULE_DIR}/sql/sql.cpp
 )
 target_link_libraries(SQL
     theSqlite
 )
-
+#>>>>>>>>>>>cmdParser<<<<<<<
 add_library(cmdParser STATIC
     ${MODULE_DIR}/cmdParser/parser.cpp
+)
+#>>>>>>>>>>>httpServer<<<<<<<
+add_library(httpServer STATIC
+    ${MODULE_DIR}/http/http.cpp
+)
+target_link_libraries(
+    httpServer
+    PocoNet
+    PocoUtil
+    ${Poco_LIBRARIES}
 )

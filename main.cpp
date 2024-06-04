@@ -2,6 +2,7 @@
 #include "include/cmdline.h"
 #include "module/cmdParser/parser.hpp"
 #include "module/sql/sql.hpp"
+#include "module/http/http.hpp"
 
 int main(int argc, char * argv[])
 {
@@ -15,6 +16,9 @@ int main(int argc, char * argv[])
         print_sqlite_info();
         // Initialize the database.
         Database DB("database.db");
+        // start server
+        ServerApp serverapp;
+        serverapp.run(argc - 1, argv++);
     }
     if (argc == 1) {
         std::cout << argParser.usage();

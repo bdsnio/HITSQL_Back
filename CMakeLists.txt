@@ -19,8 +19,12 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)      # Lib Path : lib
 set(RESC_DIR ${PROJECT_SOURCE_DIR}/resource)
 set(MODULE_DIR ${PROJECT_SOURCE_DIR}/module)
 
+# packages
+find_package(Poco REQUIRED Crypto COMPONENTS Net XML)
+
 # Compile and build
 include_directories(
+    ${Poco_INCLUDE_DIRS}
     ${PROJECT_SOURCE_DIR}/include
 )
 aux_source_directory(${PROJECT_SOURCE_DIR}/src SRC_LIST)
@@ -32,4 +36,8 @@ target_link_libraries(${PROJECT_NAME}
     SQL
     cmdParser
     myLog
+    httpServer
+    PocoNet
+    PocoUtil
+    ${Poco_LIBRARIES}
 )

@@ -23,6 +23,7 @@ mkdir hit-circle-backend
 git clone https://github.com/leebdscoding/HITSQL_Back.git .
 cmake -B build -G Ninja
 cmake --build build
+
 # compile sqlite3
 cd ~
 mkdir sqlite
@@ -32,6 +33,16 @@ tar xzvf sqlite-autoconf-3460000.tar.gz
 cd sqlite-autoconf-3460000/
 ./configure
 make && sudo make install
+
+# compile and install poco
+cd ~
+git clone -b main https://github.com/pocoproject/poco.git --depth=1
+cd poco
+mkdir cmake-build
+cd cmake-build
+cmake .. -G Ninja
+cmake --build . --config Release
+sudo cmake --build . --target install
 ```
 
 ## File structure
