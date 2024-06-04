@@ -33,3 +33,18 @@ cd sqlite-autoconf-3460000/
 ./configure
 make && sudo make install
 ```
+
+## File structure
+
+- Project                       # project root
+    - include                   # important header file
+    - module                    # modules
+        - cmdParser             # arg parse @module
+        - log                   # run log   @module 
+        - sql                   # sql       @module
+        CMakeLists.txt          # module to static lib
+    .gitignore
+    CMakeLists.txt              # manage the project
+    main.cpp                    # program entry
+    README.md                   # this file
+    TODO.md                     # functions and features to finish
