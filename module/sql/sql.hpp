@@ -5,13 +5,49 @@
 #include <sqlite3.h>
 #include <string>
 
+/// This is a Database connection object.
+/// NOTE that ONLY ONE connection a object should have in the same time. 
 class Database {
 private:
+
+    /// The database connection object.
     sqlite3 * db;
+
+    /// This string will be used to identify a Database obj.
+    /// Every opened database has its own log.
+    std::string dbName;
+    std::string dbLogName;
 
 public:
 
+    /// NOTE: the callback function's first parameter should be void*,
+    /// which is useless in most time.
+    /// @brief: This function is to execute a SQL on the open database. It's a
+    /// wrapper of the function sqlite3_exec().
+    /// @param sql: SQL to execute
+    /// @param callback: the function to process the data.
+    /// @param errMsg
+    int execSQL(
+        std::string sql,                                /* SQL to execute */
+        int (*callback)(void*, int, char**, char**),    /* callback func */
+        char **errMsg
+    ) {
+        return sqlite3_exec(db, sql.c_str(), callback, NULL, errMsg);
+    }
+    /// @brief: This function is to execute a SQL on the open database. It's a
+    /// wrapper of the function sqlite3_exec().
+    /// @param sql: SQL to execute
+    /// @param errMsg
+    /// When sql will not output, use this function.
+    int execSQL(
+        std::string sql,                                /* SQL to execute */
+        char **errMsg
+    ) {
+        return sqlite3_exec(db, sql.c_str(), NULL, NULL, errMsg);
+    };
+
     /// The two functions initialize or open the database.
+    /// NOTE: Use one of them once.
     /// NOTE: Please follow the output format!
     /// The format of the output is <time>\n<content>.
     /// Like this:
@@ -23,7 +59,9 @@ public:
     /// Initialize the database in RAM
     Database();
     
-    ~Database() {}
+    ~Database() {
+        sqlite3_close(db);
+    }
 
 
 };
