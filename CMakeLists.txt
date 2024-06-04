@@ -31,4 +31,5 @@ add_executable (${PROJECT_NAME} main.cpp ${SRC_LIST})
 target_link_libraries(${PROJECT_NAME}
     SQL
     cmdParser
+    myLog
 )

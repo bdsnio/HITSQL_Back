@@ -1,3 +1,6 @@
+add_library(myLog STATIC
+    ${MODULE_DIR}/log/log.cpp
+)
 add_library(theSqlite STATIC
     ${MODULE_DIR}/sql/sqlite3.c
 )
