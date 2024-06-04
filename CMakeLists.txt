@@ -5,7 +5,7 @@
 #########################
 
 # CMake Project settings
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.20)
 set(CMAKE_CXX_STANDARD 17)
 project("hit-circle-backend")
 set(PROJECT_NAME "hit-circle-backend")
