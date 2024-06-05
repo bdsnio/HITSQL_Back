@@ -14,6 +14,7 @@
 - C++17
 - Ninja-build(recommend) / makefile
 - sqlite3
+- [Poco](https://github.com/pocoproject/poco)
 
 ### Quick Start
 

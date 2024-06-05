@@ -1,44 +1,29 @@
 #ifndef HTTP_HPP
 #define HTTP_HPP
 
-#include <Poco/Net/ServerSocket.h>
+#include <Poco/Foundation.h>
 #include <Poco/Net/HTTPServer.h>
-#include <Poco/Net/HTTPRequestHandler.h>
-#include <Poco/Net/HTTPRequestHandlerFactory.h>
-#include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPServerParams.h>
-#include <Poco/Net/HTTPServerRequest.h>
-#include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/ServerSocket.h>
-#include <Poco/Util/Application.h>
 #include <Poco/Util/ServerApplication.h>
-#include <Poco/Path.h>
-#include <string>
 #include <vector>
 
-using namespace Poco;
-using namespace Poco::Net;
-using namespace Poco::Util;
 
-/// Handler for providing html and css files
-class WebRequestHandler : public HTTPRequestHandler {
+class ServerApp : public
+Poco::Util::ServerApplication {
 public:
-    void handleRequest(HTTPServerRequest &req, HTTPServerResponse &resp);
-};
-
-class WebRequestHandlerFactory : public HTTPRequestHandlerFactory {
-public:
-    HTTPRequestHandler* createRequestHandler(
-        const HTTPServerRequest & request
-    ) {
-        return new WebRequestHandler();
+    ServerApp(Poco::UInt16 _port, int _maxQueue, int _maxThread) {
+        port = _port;
+        maxQueue = _maxQueue;
+        maxThread = _maxThread;
     }
-};
-
-class ServerApp : public ServerApplication {
 protected:
-    int main(const std::vector<std::string> &);
+    int main(const std::vector<std::string>& args);
 
+private:
+    Poco::UInt16 port;
+    int maxQueue;
+    int maxThread;
 };
 
 #endif // !HTTP_HPP
