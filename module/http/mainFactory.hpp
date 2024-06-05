@@ -16,12 +16,17 @@ public:
     ) {
         Poco::URI uri(req.getURI());
         if (uri.getPath() == "/") {
-            return new indexHandler();
+            return new indexHandler(srvName);
         }
         else {
-            return new dataHandler();
+            return new dataHandler(srvName);
         }
     }
+
+    mainHTTPRequestHandlerFactory(std::string name) : srvName(name) {}
+
+private:
+    std::string srvName;
 };
 
 #endif // !MAINFACTORY_HPP

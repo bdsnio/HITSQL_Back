@@ -5,11 +5,14 @@
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPRequestHandler.h>
+#include <Poco/Net/SocketAddress.h>
 #include <Poco/URI.h>
 #include <Poco/Path.h>
+#include <Poco/Foundation.h>
 #include <fstream>
-#include <iterator>
 #include <string>
+
+#include "../log/log.hpp"
 
 class indexHandler : public
 Poco::Net::HTTPRequestHandler {
@@ -22,9 +25,16 @@ public:
 
         Poco::Path webroot("./webroot/");
         Poco::Path indexPath("index.html");
+        Poco::Path combinedPath(webroot.toString()+indexPath.toString());
+
+        std::string logStr = "[[INFO]] : " + 
+            req.clientAddress().host().toString() +  ":" + 
+            std::to_string(req.clientAddress().port()) +
+            " requires file " + combinedPath.toString();
+        writeToLog(serverName+".log", logStr);
 
         std::fstream fstr;
-        fstr.open(webroot.toString()+indexPath.toString());
+        fstr.open(combinedPath.toString());
         if (fstr.is_open()) {
             resp.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
             std::string fileContent(
@@ -35,10 +45,16 @@ public:
         else {
             resp.setStatus(Poco::Net::HTTPResponse::HTTP_NOT_FOUND);
             resp.send() << Poco::URI(req.getURI()).getPath() + "not found"
-            << webroot.toString()+indexPath.toString();
+            << combinedPath.toString();
             return;
         }
     }
+
+    indexHandler(std::string srvName) : serverName(srvName) {}
+
+private:
+    std::string serverName;
+
 };
 
 #endif // !INDEXHANDLER_HPP

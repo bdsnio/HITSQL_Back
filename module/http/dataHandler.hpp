@@ -12,6 +12,8 @@
 #include <string>
 #include <iostream>
 
+#include "../log/log.hpp"
+
 class dataHandler : public
 Poco::Net::HTTPRequestHandler {
 public:
@@ -22,6 +24,12 @@ public:
         Poco::Path webroot("./webroot/");
         Poco::Path filePath(Poco::URI(req.getURI()).getPath());
         Poco::Path combinedPath(webroot.toString()+filePath.toString());
+
+        std::string logStr = "[[INFO]] : " + 
+            req.clientAddress().host().toString() +  ":" + 
+            std::to_string(req.clientAddress().port()) +
+            " requires file " + combinedPath.toString();
+        writeToLog(serverName+".log", logStr);
 
         std::fstream fstr;
         fstr.open(combinedPath.toString());
@@ -42,6 +50,11 @@ public:
         std::cout << Poco::URI(req.getURI()).getPath() << std::endl;
         return;
     }
+
+    dataHandler(std::string srvName) : serverName(srvName) {}
+
+private:
+    std::string serverName;
 
 private:
     std::string getFileMIME(const Poco::Path & path) {
