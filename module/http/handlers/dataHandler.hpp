@@ -1,31 +1,28 @@
-#ifndef INDEXHANDLER_HPP
-#define INDEXHANDLER_HPP
+#ifndef DATAHANDLER_HPP
+#define DATAHANDLER_HPP
 
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPRequestHandler.h>
-#include <Poco/Net/SocketAddress.h>
 #include <Poco/URI.h>
 #include <Poco/Path.h>
-#include <Poco/Foundation.h>
 #include <fstream>
+#include <iterator>
 #include <string>
 
-#include "../log/log.hpp"
+#include "../../log/log.hpp"
 
-class indexHandler : public
+class dataHandler : public
 Poco::Net::HTTPRequestHandler {
 public:
     void handleRequest(
         Poco::Net::HTTPServerRequest& req,
         Poco::Net::HTTPServerResponse& resp
     ) {
-        resp.setContentType("text/html");
-
         Poco::Path webroot("./webroot/");
-        Poco::Path indexPath("index.html");
-        Poco::Path combinedPath(webroot.toString()+indexPath.toString());
+        Poco::Path filePath(Poco::URI(req.getURI()).getPath());
+        Poco::Path combinedPath(webroot.toString()+filePath.toString());
 
         std::string logStr = "[[INFO]] : " + 
             req.clientAddress().host().toString() +  ":" + 
@@ -36,6 +33,7 @@ public:
         std::fstream fstr;
         fstr.open(combinedPath.toString());
         if (fstr.is_open()) {
+            resp.setContentType(getFileMIME(combinedPath));
             resp.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
             std::string fileContent(
                 (std::istreambuf_iterator<char>(fstr)),
@@ -48,13 +46,36 @@ public:
             << combinedPath.toString();
             return;
         }
+        return;
     }
 
-    indexHandler(std::string srvName) : serverName(srvName) {}
+    dataHandler(std::string srvName) : serverName(srvName) {}
 
 private:
     std::string serverName;
 
+private:
+    std::string getFileMIME(const Poco::Path & path) {
+
+        if (path.getExtension() == "html") {
+            return "text/html";
+        }
+        if (path.getExtension() == "css") {
+            return "text/css";
+        }
+        if (path.getExtension() == "js") {
+            return "application/javascript";
+        }
+        if (path.getExtension() == "jpeg" || 
+            path.getExtension() == "jpg") {
+            return "image/jpeg";
+        }
+        if (path.getExtension() == "png") {
+            return "image/png";
+        }
+
+        return "text/html";
+    }
 };
 
-#endif // !INDEXHANDLER_HPP
+#endif // !DATAHANDLER_HPP
