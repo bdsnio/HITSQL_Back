@@ -1,27 +1,24 @@
 #include "http.hpp"
-#include <ostream>
+#include "mainFactory.hpp"
 
-void WebRequestHandler::handleRequest(
-    HTTPServerRequest &req, HTTPServerResponse &resp) {
-    resp.setStatus(HTTPResponse::HTTP_OK);
-    resp.setContentType("text/html");
+int ServerApp::main(const std::vector<std::string>& args) {
 
-    std::ostream & out = resp.send();
-    out << "Poco success";
-    out.flush(); 
-}
+    Poco::Net::HTTPServerParams* pParams = new Poco::Net::HTTPServerParams;
+    pParams->setMaxQueued(maxQueue);
+    pParams->setMaxThreads(maxThread);
 
-int ServerApp::main(const std::vector<std::string> &) {
-    HTTPServer server(
-        new WebRequestHandlerFactory,
-        ServerSocket(9090),
-        new HTTPServerParams
+    Poco::Net::ServerSocket svSocket(port);
+
+    Poco::Net::HTTPServer srv(
+        new mainHTTPRequestHandlerFactory(),
+        svSocket,
+        pParams
     );
 
-    server.start();
+    srv.start();
 
     waitForTerminationRequest();
 
-    server.stop();
-    return Application::EXIT_OK;
+    srv.stop();
+    return 0;
 }
