@@ -1,7 +1,6 @@
-#ifndef BADHANDLER_HPP
-#define BADHANDLER_HPP
+#ifndef STATICHANDLER_HPP
+#define STATICHANDLER_HPP
 
-#include "../handlerBase.hpp"
 #include <Poco/File.h>
 #include <Poco/URI.h>
 #include <Poco/Net/HTTPRequestHandler.h>
@@ -11,18 +10,22 @@
 #include <fstream>
 #include <string>
 
-class badHandler : public requestHandlerBase {
+#include "../handlerBase.hpp"
+
+class staticHandler : public requestHandlerBase {
 public:
-    badHandler(std::string srvName, std::string root) :
-        srvName(srvName), webroot(root) {}
+    staticHandler(std::string srvName_, std::string root) :
+        srvName(srvName_), webroot(root) {}
 protected:
     void processRequest(
         Poco::Net::HTTPServerRequest &req,
         Poco::Net::HTTPServerResponse &resp
     ) override {
-        std::string resName = std::string("404.html");
-        std::filesystem::path resPath(
-            std::filesystem::path(webroot) / resName);
+        std::string resName = std::string(Poco::URI(req.getURI()).getPath());
+        std::filesystem::path resPath(webroot);
+        resPath += resName;
+
+        std::cout << resPath << std::endl;
         std::ifstream resource(resPath);
 
         if (resource) {
@@ -45,4 +48,4 @@ private:
     std::string webroot;
 };
 
-#endif // !BADHANDLER_HPP
+#endif // !STATICHANDLER_HPP
