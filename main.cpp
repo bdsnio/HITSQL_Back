@@ -17,7 +17,7 @@ int main(int argc, char * argv[])
         // Initialize the database.
         Database DB("database.db");
         // start server
-        ServerApp serverapp(8080, 100, 8);
+        ServerApp serverapp;
         serverapp.run(argc-1, argv++);
     }
     if (argc == 1) {

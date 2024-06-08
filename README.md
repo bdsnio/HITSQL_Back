@@ -61,3 +61,39 @@ sudo cmake --build . --target install
     - main.cpp
     - README.md
     - TODO.md
+
+## Configure the server
+
+The config file is in `path/to/bin/config/config.json`.
+It's a JSON with comment file.
+
+An example is here:
+
+```
+{
+    "website": {
+        "name": "HIT_Circle"
+    },
+    "server": {
+        "port": 8080,
+        "root": "webroot/",
+        "site-root": "www/",
+        "handlers": [
+            {
+                // the handler's name, defined by backend.
+                "type": "handler name",
+                // what template this handler use, designed by web designer.
+                "template": "template/index.html",
+                "use": "what this handler do"
+            }
+            // can be more handlers
+        ]
+    }
+}
+```
+
+- `website` is required, the `name` is the server's name, which decides how the log files are named.
+- `port` in `server` is optional, the default value is 8080.
+- `root` is the website's root direction. Actually, this software is a file parser.
+- `site-root` is the website's file direction, which always includes `.html`, `.css` and template files.
+- `handlers` is about how the server run. Handlers point to the `HTTPRequestHandler()` object.

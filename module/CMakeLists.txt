@@ -1,25 +1,26 @@
 #>>>>>>>>>>>myLog<<<<<<<
-add_library(myLog STATIC
+add_library(myLog SHARED
     ${MODULE_DIR}/log/log.cpp
 )
 #>>>>>>>>>>>theSqlite<<<<<<<
-add_library(theSqlite STATIC
+add_library(theSqlite SHARED
     ${MODULE_DIR}/sql/sqlite3.c
 )
 #>>>>>>>>>>>SQL<<<<<<<
-add_library(SQL STATIC
+add_library(SQL SHARED
     ${MODULE_DIR}/sql/sql.cpp
 )
 target_link_libraries(SQL
     theSqlite
 )
 #>>>>>>>>>>>cmdParser<<<<<<<
-add_library(cmdParser STATIC
+add_library(cmdParser SHARED
     ${MODULE_DIR}/cmdParser/parser.cpp
 )
 #>>>>>>>>>>>httpServer<<<<<<<
-add_library(httpServer STATIC
+add_library(httpServer SHARED
     ${MODULE_DIR}/http/http.cpp
+    ${MODULE_DIR}/http/mainFactory.cpp
 )
 target_link_libraries(
     httpServer
