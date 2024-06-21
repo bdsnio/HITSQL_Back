@@ -1,0 +1,112 @@
+/* 重置整个文档的外边距和字体 */
+body, html {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* 设置整个页面的背景颜色为白色 */
+}
+
+/* 容器类，用于包裹侧边栏和通知区域，使用flex布局 */
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh; /* 容器高度占满整个视口高度 */
+}
+
+/* 侧边栏类，包含按钮和标签 */
+.sidebar {
+    width: 250px; /* 侧边栏宽度 */
+    padding: 20px;
+    background-color: #4a77d4; /* 侧边栏背景颜色 */
+    color: #ffffff; /* 侧边栏文字颜色 */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 侧边栏内容左对齐 */
+}
+
+/* 侧边栏内的标签，加粗并增加上边距 */
+.sidebar label {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+/* 侧边栏内的按钮，设置样式和间距 */
+.sidebar button {
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%; /* 按钮宽度 */
+    border: none;
+    background-color: #ffffff; /* 按钮背景颜色 */
+    color: #4a77d4; /* 按钮文字颜色 */
+    text-align: left; /* 按钮文字左对齐 */
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* 鼠标悬浮在侧边栏按钮上时的背景颜色变化 */
+.sidebar button:hover {
+    background-color: #f2f2f2;
+}
+
+/* 侧边栏内的分割线，用于视觉上分隔按钮 */
+.sidebar hr {
+    border: none;
+    height: 1px;
+    background-color: #ffffff;
+    margin: 10px 0;
+}
+
+/* 通知区域类，用于包裹所有通知 */
+.notifications {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f9f9f9; /* 通知区域背景颜色 */
+}
+
+/* 单个通知条目类，设置样式和阴影效果 */
+.notification {
+    background-color: #ffffff;
+    border: none;
+    padding: 20px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 轻微的阴影效果 */
+    position: relative;
+}
+
+/* 通知内的段落文本，设置字体大小和底部边距 */
+.notification p {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+/* 已读和删除按钮的样式，绝对定位在通知的右上角 */
+.markAsRead {
+    position: absolute;
+    top: 15px; /* 距离顶部的距离 */
+    right: 60px; /* 距离右侧的距离 */
+    cursor: pointer;
+    border: none;
+    background-color: transparent; /* 无背景颜色 */
+    color: #cc0000; /* 删除按钮的颜色 */
+    font-size: 14px; /* 字体大小 */
+}
+
+.delete {
+    position: absolute;
+    top: 15px; /* 距离顶部的距离 */
+    right: 10px; /* 距离右侧的距离 */
+    cursor: pointer;
+    border: none;
+    background-color: transparent; /* 无背景颜色 */
+    color: #cc0000; /* 删除按钮的颜色 */
+    font-size: 14px; /* 字体大小 */
+}
+
+/* 鼠标悬浮在删除按钮上时的文本装饰 */
+.delete:hover {
+    text-decoration: underline;
+}
+
+/* 已读消息的背景色 */
+.read {
+    background-color: #eef;
+}

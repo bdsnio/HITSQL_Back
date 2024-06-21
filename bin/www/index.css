@@ -1,0 +1,35 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:  #4a77d4; /* 背景 */
+}
+
+.container {
+    text-align: center; /* 文本居中 */
+}
+
+.header h1 {
+    margin-bottom: 70px; /* 标题与按钮之间的间距 */
+    color: white; /* 标题颜色 */
+}
+
+.action-buttons button {
+    padding: 10px 20px;
+    margin: 5px; /* 按钮之间的间距 */
+    border: none;
+    background-color: #296cf1; /* 按钮背景色 */
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px; /* 按钮圆角 */
+    transition: background-color 0.3s; /* 平滑过渡背景色 */
+}
+
+.action-buttons button:hover {
+    background-color: #0056b3; /* 鼠标悬浮时的按钮背景色 */
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>主界面 - H.I.T.S·Q·L</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">           
+            <button id="publishBtn">发布博文</button>
+            <button id="myspaceBtn">我的空间</button>
+            <label>动态</label>
+        </div>
+        <div class="main-content">
+            <!--转发的内容-->
+            <div class="post" id="post-1">
+                <div class="post-header" id="post-header-1">
+                    <span class="post-username" id="post-username-1">1663932northland</span>                   
+                    <button class="friend-btn" id="friend-btn-1">加为好友</button>               
+                </div>
+                <div class="post-body" id="post-body-1">
+                    <p>今天去参加了软件工程实验课，很开心。有人知道学子楼今天有什么好吃的吗？</p>
+                </div>
+                <div class="post-footer" id="post-footer-1">
+                    <span class="post-time" id="post-time-1"><!-- 发布时间将被显示在这里 --></span>
+                    <button class="icon-btn like-btn" id="like-btn-1">👍</button>
+                    <button class="icon-btn comment-btn" id="comment-btn-1">💬</button>
+                    <button class="icon-btn share-btn" id="share-btn-1">🔄</button>
+                </div>
+                <!-- 添加评论区 -->
+                <div class="comments-section" id="comments-section-1">
+                    <h3>评论区：</h3>
+                    <div class="comments-content" id="comments-content-1"> <!-- 评论将被显示在这里 --></div>                 
+                </div>
+                <!-- 添加评论区结束 -->
+            </div>
+            <!--转发的内容结束-->
+        </div>
+    </div>
+    <script src="home.js"></script>
+</body>
+</html>
