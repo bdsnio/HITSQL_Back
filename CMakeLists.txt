@@ -6,7 +6,7 @@
 
 # CMake Project settings
 cmake_minimum_required (VERSION 3.20)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 project("hit-circle-backend")
 set(PROJECT_NAME "hit-circle-backend")
 
@@ -37,6 +37,7 @@ target_link_libraries(${PROJECT_NAME}
     cmdParser
     myLog
     httpServer
+    myConfig
     PocoNet
     PocoUtil
     ${Poco_LIBRARIES}

@@ -36,24 +36,21 @@ public:
         std::cout << uri.getPath() << " : " << result << std::endl;
 
         if (result == "staticHandler") {
-            return new staticHandler(srvName, siteRoot);
+            return new staticHandler(srvName.value(), siteRoot.value());
         }
         if (result == "templateHandler") {
-            return new templateHandler(srvName, templateRoot);
+            return new templateHandler(srvName.value(), templateRoot.value());
         }
         if (result == "xmlHandler") {
-            return new xmlHandler(srvName, siteRoot);
+            return new xmlHandler(srvName.value(), siteRoot.value());
         }
 
-        return new badHandler(srvName, siteRoot);
+        return new badHandler(srvName.value(), siteRoot.value());
     }
 
     mainHTTPRequestHandlerFactory(std::string name) :
         srvName(name), siteRoot("www/") {
-        setConfig(
-            std::filesystem::current_path() /
-            std::filesystem::path("config/config.json")
-        );
+        setConfig();
     }
 
 private:
@@ -63,13 +60,13 @@ private:
     /// this.definiteMap-->(config.server.rules.defMap)
     ///
     /// this.ruleMap-->(config.server.rules.ruleMap)
-    void setConfig(std::filesystem::path filePath);
+    void setConfig();
 
     std::string findMatch(const std::string & text);
 
-    std::string srvName;
-    std::filesystem::path siteRoot;
-    std::filesystem::path templateRoot;
+    std::optional<std::string> srvName;
+    std::optional<std::filesystem::path> siteRoot;
+    std::optional<std::filesystem::path> templateRoot;
 
     /// resource name <--> handler
     std::map<std::string, std::string> definiteMap;

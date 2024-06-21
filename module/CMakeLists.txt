@@ -17,6 +17,10 @@ target_link_libraries(SQL
 add_library(cmdParser SHARED
     ${MODULE_DIR}/cmdParser/parser.cpp
 )
+#>>>>>>>>>>>myConfig<<<<<<<
+add_library(myConfig SHARED
+    ${MODULE_DIR}/config/config.cpp
+)
 #>>>>>>>>>>>httpServer<<<<<<<
 add_library(httpServer SHARED
     ${MODULE_DIR}/http/http.cpp
@@ -24,6 +28,7 @@ add_library(httpServer SHARED
 )
 target_link_libraries(
     httpServer
+    myConfig
     PocoNet
     PocoUtil
     ${Poco_LIBRARIES}

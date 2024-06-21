@@ -52,6 +52,7 @@ sudo cmake --build . --target install
     - include/
     - module/
         - cmdParser/
+        - config/
         - http/
         - log/
         - sql/
@@ -64,36 +65,55 @@ sudo cmake --build . --target install
 
 ## Configure the server
 
-The config file is in `path/to/bin/config/config.json`.
-It's a JSON with comment file.
+The config file is in `path/to/bin/config/config.toml`.
+It's a toml file.
+
+> I decided to change JSON to TOML for easy-use and easy-parse. You can 
+transform the JSON [here](https://transform.tools/json-to-toml) one-click.
 
 An example is here:
 
 ```
-{
-    "website": {
-        "name": "HIT_Circle"
-    },
-    "server": {
-        "port": 8080,
-        "root": "webroot/",
-        "site-root": "www/",
-        "handlers": [
-            {
-                // the handler's name, defined by backend.
-                "type": "handler name",
-                // what template this handler use, designed by web designer.
-                "template": "template/index.html",
-                "use": "what this handler do"
-            }
-            // can be more handlers
-        ]
-    }
-}
+[website]
+name = "HIT_Circle"
+
+[server]
+port = 9000
+maxQueue = 100
+maxThread = 8
+root = "www"
+template = "www/templates"
+
+[[defMap]]
+rule = [
+    "/404.html",
+    "/",
+    "/index.html",
+    "/register.html",
+    "/login.html",
+    "/home.html",
+    "/publish.html",
+    "/myspace.html",
+    "/friendlist.html",
+    "/administrator.html",
+]
+handler = "staticHandler"
+
+[[ruleMap]]
+rule = ["/[\\w]+.css", "/[\\w]+.js"]
+handler = "staticHandler"
+
+[[ruleMap]]
+rule = ["/user/[0-9]+"]
+handler = "templateHandler"
+
+[[ruleMap]]
+rule = ["/text/[0-9]+"]
+handler = "xmlHandler"
 ```
 
 - `website` is required, the `name` is the server's name, which decides how the log files are named.
 - `port` in `server` is optional, the default value is 8080.
-- `root` is the website's root direction. Actually, this software is a file parser.
-- `site-root` is the website's file direction, which always includes `.html`, `.css` and template files.
-- `handlers` is about how the server run. Handlers point to the `HTTPRequestHandler()` object.
+- `root` is the website's root direction.
+- `template` is the website's template file direction.
+- `defMap` and `ruleMap` are about how the server run. Handlers point to the `HTTPRequestHandler()` object.

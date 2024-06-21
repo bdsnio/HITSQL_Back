@@ -1,11 +1,15 @@
 #include <iostream>
 #include "include/cmdline.h"
+#include "module/config/config.hpp"
 #include "module/cmdParser/parser.hpp"
 #include "module/sql/sql.hpp"
 #include "module/http/http.hpp"
 
 int main(int argc, char * argv[])
 {
+    Config::configInit();
+    Config::getInstance().configParse("config/config.toml");
+    
     cmdline::parser argParser =  argParse(argc, argv);
 
     if (argParser.exist("init")) {
@@ -24,5 +28,6 @@ int main(int argc, char * argv[])
         std::cout << argParser.usage();
     }
 
+    Config::configQuit();
     return 0;
 }
