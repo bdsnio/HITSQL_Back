@@ -11,8 +11,11 @@
 #include <Poco/Path.h>
 #include <Poco/Net/HTTPRequestHandler.h>
 #include <Poco/Net/HTTPServerResponse.h>
+#include <fcntl.h>
+#include <memory>
 #include <string>
 #include <iostream>
+#include <map>
 
 class requestHandlerBase : public
 Poco::Net::HTTPRequestHandler {
@@ -60,6 +63,13 @@ protected:
 
         return "text/html";
     }
+
+    void checkUri(std::string& text) {
+      text = ((*ruleMap)[text].empty()) ? text : (*ruleMap)[text];
+    }
+
+public:
+    static std::unique_ptr<std::map<std::string, std::string>> ruleMap;
 };
 
 #endif // !HANDLERBASE_HPP

@@ -68,9 +68,11 @@ private:
     std::optional<std::filesystem::path> siteRoot;
     std::optional<std::filesystem::path> templateRoot;
 
+    /// special(string) <--> string
+    std::map<std::string, std::string> specialMap;
     /// resource name <--> handler
     std::map<std::string, std::string> definiteMap;
-    /// rele(string)  <--> handler
+    /// rule(string)  <--> handler
     std::map<std::string, std::string> ruleMap;
 };
 

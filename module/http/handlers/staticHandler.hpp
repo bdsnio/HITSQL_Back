@@ -23,6 +23,7 @@ protected:
     ) override {
         std::string resName = std::string(Poco::URI(req.getURI()).getPath());
         std::filesystem::path resPath(webroot);
+        checkUri(resName);
         resPath += resName;
 
         std::cout << resPath << std::endl;
