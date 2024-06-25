@@ -3,6 +3,7 @@
 
 #include "../handlerBase.hpp"
 #include <Poco/DOM/DOMParser.h>
+#include <Poco/DOM/DOMWriter.h>
 #include <Poco/DOM/Document.h>
 #include <Poco/DOM/Element.h>
 #include <Poco/DOM/NodeList.h>
@@ -84,8 +85,12 @@ private:
     Poco::XML::DOMParser parser;
     try {
       auto xmlDocument = parser.parseString(requestBody);
+      Poco::XML::DOMWriter writer;
+      writer.writeNode(std::cout, xmlDocument->getNodeByPath("root"));
+      std::cout << std::endl;
     } catch (Poco::XML::XMLException &e) {
-      std::cerr << std::format("[[ERROR]] : {} {}", e.message(), requestBody) << std::endl;
+      std::cerr << std::format("[[ERROR]] : {} {}", e.message(), requestBody)
+                << std::endl;
     }
   }
 };
