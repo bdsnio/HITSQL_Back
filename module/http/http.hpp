@@ -6,8 +6,7 @@
 /// The server's kernel: ServerApp class. It read and parse the config file.
 ///
 /// The config file is a json file.
-#ifndef HTTP_HPP
-#define HTTP_HPP
+#pragma once
 
 #include <Poco/Foundation.h>
 #include <Poco/Net/HTTPServer.h>
@@ -44,5 +43,3 @@ private:
   std::optional<int> maxQueue;
   std::optional<int> maxThread;
 };
-
-#endif // !HTTP_HPP
