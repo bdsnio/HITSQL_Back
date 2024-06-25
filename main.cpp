@@ -14,11 +14,14 @@ int main(int argc, char * argv[])
 
     if (argParser.exist("init")) {
         std::cout << "[[INFO]] : Initialize the database..." << std::endl;
+        // Initialize the database.
+        Database DB("database.db");
+        initSQLite(DB);
     }
     if (argParser.exist("start")) {
         std::cout << "[[INFO]] : HIT-Circle-backend Starting..." << std::endl;
         print_sqlite_info();
-        // Initialize the database.
+        // Connect the database.
         Database DB("database.db");
         // start server
         ServerApp serverapp;

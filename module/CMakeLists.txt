@@ -6,20 +6,22 @@ add_library(myLog SHARED
 add_library(theSqlite SHARED
     ${MODULE_DIR}/sql/sqlite3.c
 )
+#>>>>>>>>>>>myConfig<<<<<<<
+add_library(myConfig SHARED
+    ${MODULE_DIR}/config/config.cpp
+)
 #>>>>>>>>>>>SQL<<<<<<<
 add_library(SQL SHARED
     ${MODULE_DIR}/sql/sql.cpp
 )
 target_link_libraries(SQL
     theSqlite
+    myConfig
+    myLog
 )
 #>>>>>>>>>>>cmdParser<<<<<<<
 add_library(cmdParser SHARED
     ${MODULE_DIR}/cmdParser/parser.cpp
-)
-#>>>>>>>>>>>myConfig<<<<<<<
-add_library(myConfig SHARED
-    ${MODULE_DIR}/config/config.cpp
 )
 #>>>>>>>>>>>httpServer<<<<<<<
 add_library(httpServer SHARED

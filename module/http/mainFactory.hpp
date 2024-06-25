@@ -9,6 +9,7 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPRequestHandlerFactory.h>
+#include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 #include <filesystem>
 #include <iostream>
@@ -19,6 +20,7 @@
 #include "handlers/templateHandler.hpp"
 #include "handlers/xmlHandler.hpp"
 #include "handlers/badHandler.hpp"
+#include "handlers/postHandler.hpp"
 
 /// Factory for handling all file request, including .html and .css file
 /// In this class, the factory will generate the handlers when clients 
@@ -35,14 +37,19 @@ public:
         std::string result = findMatch(uri.getPath());
         std::cout << uri.getPath() << " : " << result << std::endl;
 
-        if (result == "staticHandler") {
-            return new staticHandler(srvName.value(), siteRoot.value());
+        if (req.getMethod() == Poco::Net::HTTPServerRequest::HTTP_POST) {
+            return new postHandler(srvName.value(), siteRoot.value());
         }
-        if (result == "templateHandler") {
-            return new templateHandler(srvName.value(), templateRoot.value());
-        }
-        if (result == "xmlHandler") {
-            return new xmlHandler(srvName.value(), siteRoot.value());
+        if (req.getMethod() == Poco::Net::HTTPServerRequest::HTTP_GET) {
+            if (result == "staticHandler") {
+                return new staticHandler(srvName.value(), siteRoot.value());
+            }
+            if (result == "templateHandler") {
+                return new templateHandler(srvName.value(), templateRoot.value());
+            }
+            if (result == "xmlHandler") {
+                return new xmlHandler(srvName.value(), siteRoot.value());
+            }
         }
 
         return new badHandler(srvName.value(), siteRoot.value());
